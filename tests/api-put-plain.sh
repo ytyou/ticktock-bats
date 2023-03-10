@@ -12,11 +12,11 @@ api_put "put api.put.plain.metric $TS 123 host=host456"
 check_status "$?"
 sleep 1
 
-RESP=`query_tt1 "start=1d-ago&m=avg:api.put.plain.metric%7Bhost=host456%7D"`
+RESP=`query_tt_get "start=1d-ago&m=avg:api.put.plain.metric%7Bhost=host456%7D"`
 check_status "$?"
 check_output '[{"metric":"api.put.plain.metric","tags":{"host":"host456"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]' "$RESP"
 
-RESP=`query_tt2 '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"api.put.plain.metric","tags":{"host":"host456"}}]}'`
+RESP=`query_tt_post '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"api.put.plain.metric","tags":{"host":"host456"}}]}'`
 check_status "$?"
 check_output '[{"metric":"api.put.plain.metric","tags":{"host":"host456"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]' "$RESP"
 
@@ -29,11 +29,11 @@ start_tt "--log.level=HTTP"
 check_tt_running
 ping_tt
 
-RESP=`query_tt1 "start=1d-ago&m=avg:api.put.plain.metric%7Bhost=host456%7D"`
+RESP=`query_tt_get "start=1d-ago&m=avg:api.put.plain.metric%7Bhost=host456%7D"`
 check_status "$?"
 check_output '[{"metric":"api.put.plain.metric","tags":{"host":"host456"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]' "$RESP"
 
-RESP=`query_tt2 '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"api.put.plain.metric","tags":{"host":"host456"}}]}'`
+RESP=`query_tt_post '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"api.put.plain.metric","tags":{"host":"host456"}}]}'`
 check_status "$?"
 check_output '[{"metric":"api.put.plain.metric","tags":{"host":"host456"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]' "$RESP"
 

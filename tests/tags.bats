@@ -7,7 +7,7 @@ teardown() {
     cleanup_home
 }
 
-@test "/api/put opentsdb telnet style" {
-    run api-put-plain.sh
+@test "tags" {
+    run tags.sh
     assert_success
 }
