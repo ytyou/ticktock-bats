@@ -83,6 +83,11 @@ api_put() {
     check_status "$?"
 }
 
+api_write() {
+    $CURL -XPOST "http://$HOST:$PORT/api/write" -d "$1"
+    check_status "$?"
+}
+
 query_tt_get() {
     RESP=`$CURL 'http://'$HOST':'$PORT'/api/query?'"$@"`
     check_status "$?"

@@ -16,7 +16,6 @@ sleep 1
 RESP=`query_tt_get "start=1d-ago&m=avg:tags.metric%7B0=1,1=0%7D"`
 check_status "$?"
 check_output '[{"metric":"tags.metric","tags":{"0":"1","1":"0"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]' "$RESP"
-echo "$RESP"
 
 RESP=`query_tt_post '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"tags.metric","tags":{"0":"1"}}]}'`
 check_status "$?"
