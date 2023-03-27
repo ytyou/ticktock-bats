@@ -78,6 +78,10 @@ wait_for_tt_to_stop() {
     exit 3
 }
 
+step_down() {
+    echo $(($1 - ($1 % $2)))
+}
+
 api_put() {
     $CURL -XPOST "http://$HOST:$PORT/api/put" -d "$1"
     check_status "$?"
