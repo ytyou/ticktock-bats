@@ -57,6 +57,13 @@ stop_tt() {
     check_status "$?"
 }
 
+kill_tt() {
+    PID=`pgrep -u $USER -x tt`
+    if [ ! -z "$PID" ]; then
+        kill -9 $PID
+    fi
+}
+
 check_tt_running() {
     pgrep -u $USER -x tt >/dev/null 2>&1
     check_status "$?"
