@@ -148,3 +148,15 @@ query_tt_post() {
     check_status "$?"
     echo "$RESP"
 }
+
+query_tt_get2() {
+    RESP=`$CURL 'http://'$HOST':'$HTTP2_PORT'/api/query?'"$@"`
+    check_status "$?"
+    echo "$RESP"
+}
+
+query_tt_post2() {
+    RESP=`$CURL -XPOST "http://$HOST:$HTTP2_PORT/api/query" -d "$1"`
+    check_status "$?"
+    echo "$RESP"
+}

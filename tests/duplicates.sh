@@ -2,6 +2,7 @@
 
 . common.bash
 
+check_tt_not_running
 start_tt
 check_tt_running
 ping_tt

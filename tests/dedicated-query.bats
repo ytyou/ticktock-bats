@@ -7,8 +7,8 @@ teardown() {
     cleanup_home
 }
 
-@test "run as daemon" {
-    run run-as-daemon.sh
+@test "dedicated listeners to handle query requests" {
+    run dedicated-query.sh
     echo "output = ${output}"
     assert_success
 }

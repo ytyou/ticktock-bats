@@ -4,8 +4,7 @@ setup() {
 }
 
 teardown() {
-    #cleanup_home
-    echo "done"
+    cleanup_home
 }
 
 @test "restore from append logs" {
