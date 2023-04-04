@@ -7,7 +7,7 @@ check_tt_running
 ping_tt
 
 TS=`date +%s`
-api_put "put append.metric $TS 100 t1=v1 t2=v2"
+api_put_http_gzip "put append.metric $TS 100 t1=v1 t2=v2"
 check_status "$?"
 sleep 1
 

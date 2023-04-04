@@ -7,9 +7,9 @@ check_tt_running
 ping_tt
 
 TS=`date +%s`
-api_write $'cpu,cpu=cpu10,host=yi-IdeaPad usage_guest=0,usage_guest_nice=0,usage_user=0,usage_system=0,usage_idle=100,usage_irq=0,usage_softirq=0,usage_steal=0,usage_nice=0,usage_iowait=0 1678405650000000000'
+api_write_tcp $'cpu,cpu=cpu10,host=yi-IdeaPad usage_guest=0,usage_guest_nice=0,usage_user=0,usage_system=0,usage_idle=100,usage_irq=0,usage_softirq=0,usage_steal=0,usage_nice=0,usage_iowait=0 1678405650000000000'
 check_status "$?"
-api_write $'cpu,cpu=cpu11,host=yi-IdeaPad usage_softirq=0,usage_guest=0,usage_guest_nice=0,usage_user=0.10060362175144351,usage_iowait=0,usage_irq=0,usage_steal=0,usage_system=0.20120724346628763,usage_idle=99.69818913511166,usage_nice=0 1678405650000000000'
+api_write_http $'cpu,cpu=cpu11,host=yi-IdeaPad usage_softirq=0,usage_guest=0,usage_guest_nice=0,usage_user=0.10060362175144351,usage_iowait=0,usage_irq=0,usage_steal=0,usage_system=0.20120724346628763,usage_idle=99.69818913511166,usage_nice=0 1678405650000000000'
 check_status "$?"
 sleep 1
 

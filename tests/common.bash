@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-CURL='curl -s'
+CURL='/usr/bin/curl -s'
+ECHO='/usr/bin/echo'
+GZIP='/usr/bin/gzip'
+NC='/usr/bin/nc'
 HOST=localhost
-PORT=6182
+TCP_PORT=6181
+TCP2_PORT=6180
+HTTP_PORT=6182
+HTTP2_PORT=6183
 
 cleanup_home() {
     rm -rf $TT_HOME
@@ -30,6 +36,18 @@ check_output() {
     fi
 }
 
+check_output_contains() {
+    if [[ "$2" != *"$1"* ]]; then
+        exit 1
+    fi
+}
+
+check_output_not_contains() {
+    if [[ "$2" == *"$1"* ]]; then
+        exit 1
+    fi
+}
+
 check_status() {
     if [ $1 -ne 0 ]; then
         exit $1
@@ -48,12 +66,12 @@ start_tt() {
 }
 
 ping_tt() {
-    RESP=`$CURL -XPOST "http://$HOST:$PORT/api/admin?cmd=ping"`
+    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=ping"`
     check_output "pong" "$RESP"
 }
 
 stop_tt() {
-    $CURL -XPOST "http://$HOST:$PORT/api/admin?cmd=stop"
+    $CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=stop"
     check_status "$?"
 }
 
@@ -89,24 +107,44 @@ step_down() {
     echo $(($1 - ($1 % $2)))
 }
 
-api_put() {
-    $CURL -XPOST "http://$HOST:$PORT/api/put" -d "$1"
+api_put_tcp() {
+    $ECHO "$1" | $NC -q 0 $HOST $TCP_PORT
     check_status "$?"
 }
 
-api_write() {
-    $CURL -XPOST "http://$HOST:$PORT/api/write" -d "$1"
+api_put_http() {
+    $CURL -XPOST "http://$HOST:$HTTP_PORT/api/put" -d "$1"
+    check_status "$?"
+}
+
+api_put_http_gzip() {
+    $ECHO "$1" | $GZIP | $CURL -XPOST "http://$HOST:$HTTP_PORT/api/put" -H "Content-Encoding: gzip" --data-binary @-
+    check_status "$?"
+}
+
+api_write_tcp() {
+    $ECHO "$1" | $NC -q 0 $HOST $TCP2_PORT
+    check_status "$?"
+}
+
+api_write_http() {
+    $CURL -XPOST "http://$HOST:$HTTP_PORT/api/write" -d "$1"
+    check_status "$?"
+}
+
+api_write_http_gzip() {
+    $ECHO "$1" | $GZIP | $CURL -XPOST "http://$HOST:$HTTP_PORT/api/write" -H "Content-Encoding: gzip" --data-binary @-
     check_status "$?"
 }
 
 query_tt_get() {
-    RESP=`$CURL 'http://'$HOST':'$PORT'/api/query?'"$@"`
+    RESP=`$CURL 'http://'$HOST':'$HTTP_PORT'/api/query?'"$@"`
     check_status "$?"
     echo "$RESP"
 }
 
 query_tt_post() {
-    RESP=`$CURL -XPOST "http://$HOST:$PORT/api/query" -d "$1"`
+    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/query" -d "$1"`
     check_status "$?"
     echo "$RESP"
 }

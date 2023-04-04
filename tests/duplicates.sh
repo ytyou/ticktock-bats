@@ -8,9 +8,9 @@ ping_tt
 
 TS=`date +%s`
 TS2=`step_down $TS 60`
-api_put "put duplicates.metric $TS 24 t1=v1 t2=v2"
+api_put_tcp "put duplicates.metric $TS 24 t1=v1 t2=v2"
 check_status "$?"
-api_put "put duplicates.metric $TS 42 t1=v1 t2=v2"
+api_put_http "put duplicates.metric $TS 42 t1=v1 t2=v2"
 check_status "$?"
 sleep 1
 

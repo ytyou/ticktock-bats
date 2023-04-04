@@ -8,7 +8,7 @@ check_tt_running
 ping_tt
 
 TS=`date +%s`
-api_put "put api.put.plain.metric $TS 123 host=host456"
+api_put_tcp "put api.put.plain.metric $TS 123 host=host456"
 check_status "$?"
 sleep 1
 

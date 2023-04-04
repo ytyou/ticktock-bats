@@ -7,8 +7,8 @@ teardown() {
     cleanup_home
 }
 
-@test "tags" {
-    run tags.sh
+@test "/api/put opentsdb json style" {
+    run api-put-json.sh
     echo "output = ${output}"
     assert_success
 }
