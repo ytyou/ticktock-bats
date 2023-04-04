@@ -103,6 +103,16 @@ wait_for_tt_to_stop() {
     exit 3
 }
 
+restart_tt() {
+    stop_tt
+    wait_for_tt_to_stop
+    check_tt_not_running
+    sleep 1
+    start_tt $@
+    check_tt_running
+    ping_tt
+}
+
 step_down() {
     echo $(($1 - ($1 % $2)))
 }
@@ -159,4 +169,9 @@ query_tt_post2() {
     RESP=`$CURL -XPOST "http://$HOST:$HTTP2_PORT/api/query" -d "$1"`
     check_status "$?"
     echo "$RESP"
+}
+
+compact() {
+    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=compact"`
+    check_status "$?"
 }

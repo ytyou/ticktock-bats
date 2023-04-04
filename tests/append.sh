@@ -2,6 +2,7 @@
 
 . common.bash
 
+check_tt_not_running
 start_tt --append.log.flush.frequency=5s
 check_tt_running
 ping_tt
