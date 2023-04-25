@@ -103,13 +103,7 @@ check_status "$?"
 check_output '[{"metric":"field.metric4","tags":{"t1":"v1","_field":"f1"},"aggregateTags":[],"dps":{"'$TS1'":5.0}},{"metric":"field.metric4","tags":{"t1":"v1","_field":"f2"},"aggregateTags":[],"dps":{"'$TS2'":6.0}}]' "$RESP"
 
 
-# restart TT
-stop_tt
-wait_for_tt_to_stop
-check_tt_not_running
-sleep 2
-start_tt
-check_tt_running
+restart_tt
 
 
 RESP=`query_tt_get "start=1d-ago&m=none:field.metric4"`
