@@ -23,13 +23,13 @@ done
 
 kill_tt
 check_tt_not_running
-sleep 1
+sleep 2
 
 # restart tt
 start_tt
 check_tt_running
 ping_tt
-sleep 1
+sleep 2
 
 RESP=`query_tt_get "start=1h-ago&m=none:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"

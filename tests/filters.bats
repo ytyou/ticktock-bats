@@ -4,7 +4,7 @@ setup() {
 }
 
 teardown() {
-    : # cleanup_home
+    cleanup_home
 }
 
 @test "opentsdb version >2.2 filters" {
