@@ -36,7 +36,7 @@ check_output '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web01"},"ag
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=*,dc=dal%7D"`
 check_status "$?"
-check_output '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web01"},"aggregateTags":[],"dps":{"'$TS'":3.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web02"},"aggregateTags":[],"dps":{"'$TS'":2.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web03"},"aggregateTags":[],"dps":{"'$TS'":10.0}}]' "$RESP"
+check_output2 "$RESP" '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web01"},"aggregateTags":[],"dps":{"'$TS'":3.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web02"},"aggregateTags":[],"dps":{"'$TS'":2.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web03"},"aggregateTags":[],"dps":{"'$TS'":10.0}}]'  '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web02"},"aggregateTags":[],"dps":{"'$TS'":2.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web01"},"aggregateTags":[],"dps":{"'$TS'":3.0}},{"metric":"filters.metric","tags":{"dc":"dal","host":"web03"},"aggregateTags":[],"dps":{"'$TS'":10.0}}]'
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bdc=dal|lax%7D"`
 check_status "$?"
