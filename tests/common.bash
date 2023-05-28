@@ -37,7 +37,7 @@ check_output() {
 }
 
 check_output2() {
-    if [ "$1" != "$2" ] && [ "$1" != "$3"]; then
+    if [ "$1" != "$2" ] && [ "$1" != "$3" ]; then
         exit 1
     fi
 }
