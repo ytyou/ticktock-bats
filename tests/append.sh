@@ -21,6 +21,14 @@ while [ ! -f "${TT_HOME}/data/append.log" ]; do
     sleep 1
 done
 
+# make sure append.log has content
+while : ; do
+    APPEND_SIZE=$(stat --format=%s "${TT_HOME}/data/append.log")
+    if [ $APPEND_SIZE -ne 0 ]; then
+        break
+    fi
+done
+
 kill_tt
 check_tt_not_running
 sleep 2
