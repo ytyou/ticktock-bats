@@ -41,6 +41,22 @@ check_status "$?"
 check_output '[{"metric":"json.metric3","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS3'":5.0}}]' "$RESP"
 
 
+# non-string tag values
+TS4=$(( $TS3 + $INC ))
+api_put_http '{"metric":"json.metric4","timestamp":'$TS4',"value":6.0,"tags":{"t1":true}}'
+check_status "$?"
+api_put_http '{"metric":"json.metric4","timestamp":'$TS4',"value":7.0,"tags":{"t1":false}}'
+check_status "$?"
+
+RESP=`query_tt_get "start=1d-ago&m=none:json.metric4%7Bt1=true%7D"`
+check_status "$?"
+check_output '[{"metric":"json.metric4","tags":{"t1":"true"},"aggregateTags":[],"dps":{"'$TS4'":6.0}}]' "$RESP"
+
+RESP=`query_tt_get "start=1d-ago&m=none:json.metric4%7Bt1=false%7D"`
+check_status "$?"
+check_output '[{"metric":"json.metric4","tags":{"t1":"false"},"aggregateTags":[],"dps":{"'$TS4'":7.0}}]' "$RESP"
+
+
 stop_tt
 wait_for_tt_to_stop
 check_tt_not_running
