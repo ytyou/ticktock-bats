@@ -45,7 +45,7 @@ check_output '[{"metric":"json.metric3","tags":{"t1":"v1"},"aggregateTags":[],"d
 TS4=$(( $TS3 + $INC ))
 api_put_http '{"metric":"json.metric4","timestamp":'$TS4',"value":6.0,"tags":{"t1":true}}'
 check_status "$?"
-api_put_http '{"metric":"json.metric4","timestamp":'$TS4',"value":7.0,"tags":{"t1":false}}'
+api_put_http '[{"metric":"json.metric4","timestamp":'$TS4',"value":7.0,"tags":{"t1":false}}]'
 check_status "$?"
 
 RESP=`query_tt_get "start=1d-ago&m=none:json.metric4%7Bt1=true%7D"`
