@@ -42,6 +42,12 @@ check_output2() {
     fi
 }
 
+check_output3() {
+    if [ "$1" != "$2" ] && [ "$1" != "$3" ] && [ "$1" != "$4" ]; then
+        exit 1
+    fi
+}
+
 check_output_contains() {
     if [[ "$2" != *"$1"* ]]; then
         exit 1
