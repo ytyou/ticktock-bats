@@ -183,12 +183,7 @@ query_tt_post2() {
     echo "$RESP"
 }
 
-append() {
-    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=append"`
-    check_status "$?"
-}
-
-compact() {
-    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=compact"`
+cmd() {
+    RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=$1"`
     check_status "$?"
 }

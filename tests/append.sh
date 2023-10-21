@@ -17,7 +17,7 @@ RESP=`query_tt_get "start=1h-ago&m=none:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"
 check_output '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]' "$RESP"
 
-append
+cmd "append"
 
 # wait for append.log to exist
 while [ ! -f "${TT_HOME}/data/append.log" ]; do

@@ -40,7 +40,7 @@ sleep 1
 query_and_verify $START $INC "v1"
 
 # trigger compaction
-compact
+cmd "compact"
 sleep 1
 
 # query data
@@ -76,7 +76,7 @@ query_and_verify $START $INC "v1"
 query_and_verify $START $INC "v2"
 
 # trigger compaction
-compact
+cmd "compact"
 sleep 1
 
 # query data
