@@ -73,7 +73,7 @@ check_not_status() {
 }
 
 start_tt() {
-    ${TT_SRC}/bin/tt -r -d -c ${TT_SRC}/conf/tt.conf --ticktock.home=$TT_HOME $@ 3>/dev/null
+    ${TT_SRC}/bin/tt -r -q -d -c ${TT_SRC}/conf/tt.conf --ticktock.home=$TT_HOME $@ 3>/dev/null
     check_status "$?"
 }
 

@@ -20,13 +20,13 @@ check_output '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregate
 cmd "append"
 
 # wait for append.log to exist
-while [ ! -f "${TT_HOME}/data/append.log" ]; do
+while [ ! -f "${TT_HOME}/data/WAL/append.log" ]; do
     sleep 1
 done
 
 # make sure append.log has content
 while : ; do
-    APPEND_SIZE=$(stat --format=%s "${TT_HOME}/data/append.log")
+    APPEND_SIZE=$(stat --format=%s "${TT_HOME}/data/WAL/append.log")
     if [ $APPEND_SIZE -ne 0 ]; then
         break
     fi
