@@ -9,10 +9,11 @@ TS3=$(( $TS2 + 8 ))
 TS4=$(( $TS3 + 16 ))
 TS5=$(( $TS4 + 1 ))
 
-for i in {0..3}
+for i in {0..4}
 do
 
 check_tt_not_running
+cleanup_home
 start_tt "--tsdb.compressor.version=$i"
 check_tt_running
 ping_tt
