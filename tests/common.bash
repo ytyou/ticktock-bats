@@ -150,6 +150,11 @@ api_put_http_gzip() {
     check_status "$?"
 }
 
+api_put_http_json() {
+    $CURL -XPOST "http://$HOST:$HTTP_PORT/api/put" -H "Content-Type: application/json" -d "$1"
+    check_status "$?"
+}
+
 api_write_tcp() {
     $ECHO "$1" | $NC -q 0 $HOST $TCP2_PORT
     check_status "$?"
