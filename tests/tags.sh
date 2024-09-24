@@ -20,7 +20,7 @@ check_output '[{"metric":"tags.metric","tags":{"0":"1","1":"0"},"aggregateTags":
 
 RESP=`query_tt_post '{"start":"1d-ago","queries":[{"aggregator":"none","metric":"tags.metric","tags":{"0":"1"}}]}'`
 check_status "$?"
-check_output '[{"metric":"tags.metric","tags":{"0":"1","1":"0"},"aggregateTags":[],"dps":{"'$TS'":123.0}},{"metric":"tags.metric","tags":{"0":"1","1":"1"},"aggregateTags":[],"dps":{"'$TS'":234.0}}]' "$RESP"
+check_output2 "$RESP"  '[{"metric":"tags.metric","tags":{"0":"1","1":"0"},"aggregateTags":[],"dps":{"'$TS'":123.0}},{"metric":"tags.metric","tags":{"0":"1","1":"1"},"aggregateTags":[],"dps":{"'$TS'":234.0}}]'  '[{"metric":"tags.metric","tags":{"0":"1","1":"1"},"aggregateTags":[],"dps":{"'$TS'":234.0}},{"metric":"tags.metric","tags":{"0":"1","1":"0"},"aggregateTags":[],"dps":{"'$TS'":123.0}}]'
 
 api_put_http_gzip "put tags.metric2 $TS 100 tag1=val1 tag2=val1"
 check_status "$?"

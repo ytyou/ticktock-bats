@@ -4,11 +4,18 @@ CURL='/usr/bin/curl -s'
 ECHO='/usr/bin/echo'
 GZIP='/usr/bin/gzip'
 NC='/usr/bin/nc'
+NCOPT="-q 0"
 HOST=localhost
 TCP_PORT=6181
 TCP2_PORT=6180
 HTTP_PORT=6182
 HTTP2_PORT=6183
+
+# does nc support '-q'?
+$NC -h 2>&1 | grep '\-q'
+if [ "$?" -ne 0 ]; then
+    NCOPT=""
+fi
 
 cleanup_home() {
     rm -rf $TT_HOME
@@ -81,6 +88,7 @@ check_not_status() {
 start_tt() {
     ${TT_SRC}/bin/tt -r -q -d -c ${TT_SRC}/conf/tt.conf --ticktock.home=$TT_HOME $@ 3>/dev/null
     check_status "$?"
+    sleep 1
 }
 
 ping_tt() {
@@ -136,7 +144,7 @@ step_down() {
 }
 
 api_put_tcp() {
-    $ECHO "$1" | $NC -q 0 $HOST $TCP_PORT
+    $ECHO "$1" | $NC $NCOPT $HOST $TCP_PORT
     check_status "$?"
 }
 
@@ -156,7 +164,7 @@ api_put_http_json() {
 }
 
 api_write_tcp() {
-    $ECHO "$1" | $NC -q 0 $HOST $TCP2_PORT
+    $ECHO "$1" | $NC $NCOPT $HOST $TCP2_PORT
     check_status "$?"
 }
 
