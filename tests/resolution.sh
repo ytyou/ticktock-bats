@@ -214,6 +214,9 @@ api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890,"valu
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 12345678901,"value":11,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 123456789012,"value":12,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890123,"value":13,"tags":{"t1":"v1"}}'
+api_put_http_json '{"metric":"resolution.metric.6","timestamp": 12345678901234,"value":14,"tags":{"t1":"v1"}}'
+api_put_http_json '{"metric":"resolution.metric.6","timestamp": 123456789012345,"value":15,"tags":{"t1":"v1"}}'
+api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890123456,"value":16,"tags":{"t1":"v1"}}'
 
 RESP=`query_tt_get "start=12345678&msResolution=true&m=avg:resolution.metric.6"`
 check_status "$?"
