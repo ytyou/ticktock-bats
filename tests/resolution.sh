@@ -58,6 +58,7 @@ check_tt_running
 ping_tt
 
 insert_data_sec "1"
+sleep 2
 
 RESP=`query_tt_get "start=1600&m=avg:resolution.metric.1"`
 check_status "$?"
@@ -90,6 +91,7 @@ check_tt_running
 ping_tt
 
 insert_data_ms "2"
+sleep 2
 
 RESP=`query_tt_get "start=1600&m=avg:resolution.metric.2"`
 check_status "$?"
@@ -122,6 +124,7 @@ check_tt_running
 ping_tt
 
 insert_data_sec "3"
+sleep 2
 
 RESP=`query_tt_get "start=1600&msResolution=true&m=avg:resolution.metric.3"`
 check_status "$?"
@@ -154,6 +157,7 @@ check_tt_running
 ping_tt
 
 insert_data_ms "4"
+sleep 2
 
 RESP=`query_tt_get "start=1600&msResolution=true&m=avg:resolution.metric.4"`
 check_status "$?"
@@ -208,6 +212,7 @@ check_tt_running
 ping_tt
 
 # insert data in json format
+# timestamps having more than 13 digits will be dropped
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 12345678,"value":8,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 123456789,"value":9,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890,"value":10,"tags":{"t1":"v1"}}'
@@ -217,10 +222,10 @@ api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890123,"v
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 12345678901234,"value":14,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 123456789012345,"value":15,"tags":{"t1":"v1"}}'
 api_put_http_json '{"metric":"resolution.metric.6","timestamp": 1234567890123456,"value":16,"tags":{"t1":"v1"}}'
+sleep 2
 
 RESP=`query_tt_get "start=12345678&msResolution=true&m=avg:resolution.metric.6"`
 check_status "$?"
-echo "RESP=$RESP"
 check_output '[{"metric":"resolution.metric.6","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"12345678000":8.0,"12345678901":11.0,"123456789000":9.0,"123456789012":12.0,"1234567890000":10.0,"1234567890123":13.0}}]' "$RESP"
 
 stop_tt
