@@ -15,13 +15,13 @@ sleep 1
 
 RESP=`query_tt_get "start=1h-ago&m=none:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"
-check_output2 "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]' '[{"metric":"append.metric","tags":{"t2":"v2","t1":"v1"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]'
+check_output "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]'
 
 # query rollup data
 TS1=$(($TS - ($TS % 3600)))
 RESP=`query_tt_get "start=1h-ago&m=none:1h-min:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"
-check_output2 "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]' '[{"metric":"append.metric","tags":{"t2":"v2","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]'
+check_output "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]'
 
 cmd "append"
 
@@ -50,11 +50,11 @@ sleep 2
 
 RESP=`query_tt_get "start=1h-ago&m=none:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"
-check_output2 "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]' '[{"metric":"append.metric","tags":{"t2":"v2","t1":"v1"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]'
+check_output "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS'":100.0}}]'
 
 RESP=`query_tt_get "start=1h-ago&m=none:1h-max:append.metric%7Bt1=v1,t2=v2%7D"`
 check_status "$?"
-check_output2 "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]' '[{"metric":"append.metric","tags":{"t2":"v2","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]'
+check_output "$RESP" '[{"metric":"append.metric","tags":{"t1":"v1","t2":"v2"},"aggregateTags":[],"dps":{"'$TS1'":100.0}}]'
 
 stop_tt
 wait_for_tt_to_stop

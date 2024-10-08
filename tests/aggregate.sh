@@ -114,7 +114,7 @@ check_status "$?"
 
 RESP=`query_tt_get "start=1d-ago&m=none:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output3 "$RESP" '[{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]'  '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]'  '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}}]'
+check_output "$RESP" '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]'
 
 RESP=`query_tt_get "start=1d-ago&m=top1:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
