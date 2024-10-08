@@ -70,11 +70,11 @@ check_output '[{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[
 
 RESP=`query_tt_get "start=1d-ago&m=top2:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output '[{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}}]' "$RESP"
+check_output '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=top10:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output '[{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}}]' "$RESP"
+check_output '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=bottom1:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
@@ -122,15 +122,15 @@ check_output '[{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[
 
 RESP=`query_tt_get "start=1d-ago&m=top2:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output '[{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}}]' "$RESP"
+check_output '[{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=top3:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output '[{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}}]' "$RESP"
+check_output '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=top10:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"
-check_output '[{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}}]' "$RESP"
+check_output '[{"metric":"aggregate.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"aggregate.metric","tags":{"t1":"v2"},"aggregateTags":[],"dps":{"'$TS1'":2.0}},{"metric":"aggregate.metric","tags":{"t1":"v3"},"aggregateTags":[],"dps":{"'$TS1'":3.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=bottom1:aggregate.metric%7Bt1=*%7D"`
 check_status "$?"

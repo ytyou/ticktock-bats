@@ -89,7 +89,7 @@ sleep 1
 
 RESP=`query_tt_get "start=1d-ago&m=none:field.metric3"`
 check_status "$?"
-check_output '[{"metric":"field.metric3","tags":{"_field":"f1","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}},{"metric":"field.metric3","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS2'":2.0}}]' "$RESP"
+check_output '[{"metric":"field.metric3","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS2'":2.0}},{"metric":"field.metric3","tags":{"_field":"f1","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0}}]' "$RESP"
 
 api_put_tcp "put field.metric3 $TS3 3 t1=v1 _field=f1"
 check_status "$?"
@@ -97,7 +97,7 @@ sleep 1
 
 RESP=`query_tt_get "start=1d-ago&m=none:field.metric3"`
 check_status "$?"
-check_output '[{"metric":"field.metric3","tags":{"_field":"f1","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0,"'$TS3'":3.0}},{"metric":"field.metric3","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS2'":2.0}}]' "$RESP"
+check_output '[{"metric":"field.metric3","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS2'":2.0}},{"metric":"field.metric3","tags":{"_field":"f1","t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":1.0,"'$TS3'":3.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=none:field.metric3%7B_field=_%7D"`
 check_status "$?"
