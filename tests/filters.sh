@@ -28,7 +28,7 @@ sleep 2
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=web01%7D"`
 check_status "$?"
-check_output '[{"metric":"filters.metric","tags":{"host":"web01","owner":"jdoe"},"aggregateTags":["dc"],"dps":{"'$TS'":16.0}}]' "$RESP"
+check_output '[{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=web01,dc=dal%7D"`
 check_status "$?"
