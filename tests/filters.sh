@@ -78,8 +78,17 @@ RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=literal_or(web01)%7
 check_status "$?"
 check_output '[{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}}]' "$RESP"
 
+RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=iliteral_or(Web01)%7D"`
+check_status "$?"
+check_output '[{"metric":"filters.metric","tags":{"host":"Web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}}]' "$RESP"
+
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=literal_or(web01|web02|web03)%7D"`
 check_status "$?"
+check_output '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web03"},"aggregateTags":[],"dps":{"'$TS'":10.0}},{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}},{"metric":"filters.metric","tags":{"host":"web02"},"aggregateTags":["dc"],"dps":{"'$TS'":6.0}}]' "$RESP"
+
+RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=iliteral_or(Web01|WEB02|web03)%7D"`
+check_status "$?"
+echo "RESP=$RESP"
 check_output '[{"metric":"filters.metric","tags":{"dc":"dal","host":"web03"},"aggregateTags":[],"dps":{"'$TS'":10.0}},{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}},{"metric":"filters.metric","tags":{"host":"web02"},"aggregateTags":["dc"],"dps":{"'$TS'":6.0}}]' "$RESP"
 
 stop_tt
