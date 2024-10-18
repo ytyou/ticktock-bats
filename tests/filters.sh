@@ -80,7 +80,7 @@ check_output '[{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=iliteral_or(Web01)%7D"`
 check_status "$?"
-check_output '[{"metric":"filters.metric","tags":{"host":"Web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}}]' "$RESP"
+check_output '[{"metric":"filters.metric","tags":{"host":"web01"},"aggregateTags":[],"dps":{"'$TS'":16.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1d-ago&m=sum:filters.metric%7Bhost=not_literal_or(web01)%7D"`
 check_status "$?"
