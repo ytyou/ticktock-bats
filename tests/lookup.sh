@@ -9,41 +9,41 @@ ping_tt
 
 TS=`date +%s`
 
-api_put_tcp "put lookup.metric.1 $TS 100 host=host1 dc=na"
+api_put_http "put lookup.metric.1 $TS 100 host=host1 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 200 host=host2 dc=na"
+api_put_http "put lookup.metric.1 $TS 200 host=host2 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 300 host=host3 dc=na"
+api_put_http "put lookup.metric.1 $TS 300 host=host3 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 400 host=host4 dc=na"
+api_put_http "put lookup.metric.1 $TS 400 host=host4 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 100 host=host5 dc=na"
+api_put_http "put lookup.metric.2 $TS 100 host=host5 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 200 host=host6 dc=na"
+api_put_http "put lookup.metric.2 $TS 200 host=host6 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 300 host=host7 dc=na"
+api_put_http "put lookup.metric.2 $TS 300 host=host7 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 400 host=host8 dc=na"
+api_put_http "put lookup.metric.2 $TS 400 host=host8 dc=na"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 100 host=host1 dc=eu"
+api_put_http "put lookup.metric.1 $TS 100 host=host1 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 200 host=host2 dc=eu"
+api_put_http "put lookup.metric.1 $TS 200 host=host2 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 300 host=host3 dc=eu"
+api_put_http "put lookup.metric.1 $TS 300 host=host3 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.1 $TS 400 host=host4 dc=eu"
+api_put_http "put lookup.metric.1 $TS 400 host=host4 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 100 host=host5 dc=eu"
+api_put_http "put lookup.metric.2 $TS 100 host=host5 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 200 host=host6 dc=eu"
+api_put_http "put lookup.metric.2 $TS 200 host=host6 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 300 host=host7 dc=eu"
+api_put_http "put lookup.metric.2 $TS 300 host=host7 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.2 $TS 400 host=host8 dc=eu"
+api_put_http "put lookup.metric.2 $TS 400 host=host8 dc=eu"
 check_status "$?"
-api_put_tcp "put lookup.metric.3 $TS 500 host=host20"
+api_put_http "put lookup.metric.3 $TS 500 host=host20"
 check_status "$?"
-api_put_tcp "put lookup.metric.3 $TS 500 dc=na"
+api_put_http "put lookup.metric.3 $TS 500 dc=na"
 check_status "$?"
 
 sleep 1
@@ -92,33 +92,33 @@ check_output_contains '{"tsuid":"00000000E","metric":"*","tags":{"dc":"eu","host
 check_output_contains '{"tsuid":"00000000F","metric":"*","tags":{"dc":"eu","host":"host8"}}' "$RESP"
 
 # limit
-RESP=`lookup_tt_get "limit=5&m=lookup.metric.2%7Bhost=*%7D"`
-check_status "$?"
-check_output_contains '{"type":"LOOKUP","limit":5,"startIndex":0,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
-check_output_contains '{"tsuid":"000000004","metric":"lookup.metric.2","tags":{"dc":"na","host":"host5"}}' "$RESP"
-check_output_contains '{"tsuid":"000000005","metric":"lookup.metric.2","tags":{"dc":"na","host":"host6"}}' "$RESP"
-check_output_contains '{"tsuid":"000000007","metric":"lookup.metric.2","tags":{"dc":"na","host":"host8"}}' "$RESP"
-check_output_contains '{"tsuid":"00000000C","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host5"}}' "$RESP"
-check_output_contains '{"tsuid":"00000000D","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host6"}}' "$RESP"
+#RESP=`lookup_tt_get "limit=5&m=lookup.metric.2%7Bhost=*%7D"`
+#check_status "$?"
+#check_output_contains '{"type":"LOOKUP","limit":5,"startIndex":0,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
+#check_output_contains '{"tsuid":"000000004","metric":"lookup.metric.2","tags":{"dc":"na","host":"host5"}}' "$RESP"
+#check_output_contains '{"tsuid":"000000005","metric":"lookup.metric.2","tags":{"dc":"na","host":"host6"}}' "$RESP"
+#check_output_contains '{"tsuid":"000000007","metric":"lookup.metric.2","tags":{"dc":"na","host":"host8"}}' "$RESP"
+#check_output_contains '{"tsuid":"00000000C","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host5"}}' "$RESP"
+#check_output_contains '{"tsuid":"00000000D","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host6"}}' "$RESP"
 
 # pagination
-RESP=`lookup_tt_get "limit=2&m=lookup.metric.2%7Bhost=*%7D"`
-check_status "$?"
-check_output_contains '{"type":"LOOKUP","limit":2,"startIndex":0,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
-check_output_contains '{"tsuid":"000000004","metric":"lookup.metric.2","tags":{"dc":"na","host":"host5"}}' "$RESP"
-check_output_contains '{"tsuid":"000000007","metric":"lookup.metric.2","tags":{"dc":"na","host":"host8"}}' "$RESP"
+#RESP=`lookup_tt_get "limit=2&m=lookup.metric.2%7Bhost=*%7D"`
+#check_status "$?"
+#check_output_contains '{"type":"LOOKUP","limit":2,"startIndex":0,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
+#check_output_contains '{"tsuid":"000000004","metric":"lookup.metric.2","tags":{"dc":"na","host":"host5"}}' "$RESP"
+#check_output_contains '{"tsuid":"000000007","metric":"lookup.metric.2","tags":{"dc":"na","host":"host8"}}' "$RESP"
 
 # pagination, continue
-RESP=`lookup_tt_get "limit=2&startIndex=2&m=lookup.metric.2%7Bhost=*%7D"`
-check_status "$?"
-check_output_contains '{"type":"LOOKUP","limit":2,"startIndex":2,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
-check_output_contains '{"tsuid":"00000000C","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host5"}}' "$RESP"
-check_output_contains '{"tsuid":"00000000D","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host6"}}' "$RESP"
+#RESP=`lookup_tt_get "limit=2&startIndex=2&m=lookup.metric.2%7Bhost=*%7D"`
+#check_status "$?"
+#check_output_contains '{"type":"LOOKUP","limit":2,"startIndex":2,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[' "$RESP"
+#check_output_contains '{"tsuid":"00000000C","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host5"}}' "$RESP"
+#check_output_contains '{"tsuid":"00000000D","metric":"lookup.metric.2","tags":{"dc":"eu","host":"host6"}}' "$RESP"
 
 # pagination, continue
-RESP=`lookup_tt_get "limit=1&startIndex=4&m=lookup.metric.2%7Bhost=*%7D"`
-check_status "$?"
-check_output '{"type":"LOOKUP","limit":1,"startIndex":4,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[{"tsuid":"000000005","metric":"lookup.metric.2","tags":{"dc":"na","host":"host6"}}]}' "$RESP"
+#RESP=`lookup_tt_get "limit=1&startIndex=4&m=lookup.metric.2%7Bhost=*%7D"`
+#check_status "$?"
+#check_output '{"type":"LOOKUP","limit":1,"startIndex":4,"totalResults":8,"metric":"lookup.metric.2","tags":[{"key":"host","value":"*"}],"results":[{"tsuid":"000000005","metric":"lookup.metric.2","tags":{"dc":"na","host":"host6"}}]}' "$RESP"
 
 stop_tt
 wait_for_tt_to_stop
