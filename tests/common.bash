@@ -202,6 +202,12 @@ query_tt_post2() {
     echo "$RESP"
 }
 
+lookup_tt_get() {
+    RESP=`$CURL 'http://'$HOST':'$HTTP_PORT'/api/search/lookup?'"$@"`
+    check_status "$?"
+    echo "$RESP"
+}
+
 cmd() {
     RESP=`$CURL -XPOST "http://$HOST:$HTTP_PORT/api/admin?cmd=$1"`
     check_status "$?"
