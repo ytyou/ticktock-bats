@@ -42,7 +42,7 @@ sleep 1
 RESP=`query_tt_get "start=1d-ago&m=none:compression.metric%7Bt1=v1%7D"`
 check_status "$?"
 echo "RESP=$RESP"
-check_output '[{"metric":"compression.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":nan,"'$TS2'":0.001,"'$TS3'":nan,"'$TS4'":0.002,"'$TS5'":0.003,"'$TS6'":nan,"'$TS7'":0.004,"'$TS8'":inf}}]' "$RESP"
+check_output '[{"metric":"compression.metric","tags":{"t1":"v1"},"aggregateTags":[],"dps":{"'$TS1'":"NaN","'$TS2'":0.001,"'$TS3'":"NaN","'$TS4'":0.002,"'$TS5'":0.003,"'$TS6'":"NaN","'$TS7'":0.004,"'$TS8'":"Inf"}}]' "$RESP"
 
 stop_tt
 wait_for_tt_to_stop
