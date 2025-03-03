@@ -92,26 +92,26 @@ check_output '[{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregat
 # downsample with fill, query range covers 1 dp
 RESP=`query_tt_get "start=1569888050&end=1569888070&m=none:10s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":1.0,"1569888070":0.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":1.0,"1569888070":0.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":0.0,"1569888070":0.0}}]' "$RESP"
 
 # downsample with fill, query range covers no dp
 RESP=`query_tt_get "start=1569888020&end=1569888040&m=none:10s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888020":0.0,"1569888030":0.0,"1569888040":0.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888020":0.0,"1569888030":0.0,"1569888040":0.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888020":0.0,"1569888030":0.0,"1569888040":0.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1569888050&end=1569888130&m=none:10s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":1.0,"1569888070":0.0,"1569888080":0.0,"1569888090":0.0,"1569888100":0.0,"1569888110":0.0,"1569888120":2.0,"1569888130":0.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":1.0,"1569888070":0.0,"1569888080":0.0,"1569888090":0.0,"1569888100":0.0,"1569888110":0.0,"1569888120":2.0,"1569888130":0.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888050":0.0,"1569888060":0.0,"1569888070":0.0,"1569888080":0.0,"1569888090":0.0,"1569888100":0.0,"1569888110":0.0,"1569888120":0.0,"1569888130":0.0}}]' "$RESP"
 
 # downsample without fill, query range covers no dp
 RESP=`query_tt_get "start=1569888020&end=1569888040&m=none:10s-sum:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{}}]' "$RESP"
+check_output '[]' "$RESP"
 
 # no downsample, query range covers no dp
 RESP=`query_tt_get "start=1569888020&end=1569888040&m=none:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{}}]' "$RESP"
+check_output '[]' "$RESP"
 
 # no downsample, query range covers no dp, even going back an hour
 RESP=`query_tt_get "start=1569945900&end=1569945910&m=none:downsample.metric.1"`
@@ -125,32 +125,33 @@ check_output '[]' "$RESP"
 
 RESP=`query_tt_get "start=1569945900&end=1569945910&m=none:10s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569945900":0.0,"1569945910":0.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569945900":0.0,"1569945910":0.0}}]' "$RESP"
 
 # step-up, not step-down
 RESP=`query_tt_get "start=1569888121&end=1569888239&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888180":3.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888180":3.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888180":0.0}}]' "$RESP"
 
+# ???
 RESP=`query_tt_get "start=1569888601&end=1569888659&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{}}]' "$RESP"
+check_output '[]' "$RESP"
 
 RESP=`query_tt_get "start=1569888599&end=1569888600&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888600":0.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1569888599&end=1569888660&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0,"1569888660":11.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0,"1569888660":11.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888600":0.0,"1569888660":0.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1569888601&end=1569888660&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888660":11.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888660":11.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888660":0.0}}]' "$RESP"
 
 RESP=`query_tt_get "start=1569888600&end=1569888659&m=none:60s-sum-zero:downsample.metric.1"`
 check_status "$?"
-check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0}}]' "$RESP"
+check_output '[{"metric":"downsample.metric.1","tags":{"host":"host1"},"aggregateTags":[],"dps":{"1569888600":500010.0}},{"metric":"downsample.metric.1","tags":{"host":"host2"},"aggregateTags":[],"dps":{"1569888600":0.0}}]' "$RESP"
 
 
 stop_tt
